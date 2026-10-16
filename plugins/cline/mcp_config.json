@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "piyaz": {
+      "serverUrl": "https://app.piyaz.ai/api/mcp"
+    }
+  }
+}

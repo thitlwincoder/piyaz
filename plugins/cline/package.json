@@ -1,0 +1,23 @@
+{
+  "name": "cline-piyaz-plugin",
+  "version": "0.4.16",
+  "description": "Cline plugin that exposes the Piyaz MCP server (tasks, dependencies, decisions, activity) as Cline tools.",
+  "private": true,
+  "type": "module",
+  "cline": {
+    "plugins": [
+      {
+        "paths": [
+          "./cline-plugin.ts"
+        ],
+        "capabilities": [
+          "tools",
+          "hooks"
+        ]
+      }
+    ]
+  },
+  "devDependencies": {
+    "@cline/sdk": "^0.0.93"
+  }
+}
