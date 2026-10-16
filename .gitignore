@@ -14,6 +14,10 @@
 /.open-next/
 /.wrangler/
 
+# local conda environments
+/.conda/
+/environment.yml
+
 # production
 /build
 /dist
