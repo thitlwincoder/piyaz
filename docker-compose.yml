@@ -38,5 +38,32 @@ services:
       timeout: 3s
       retries: 5
 
+  # Optional self-host app container: `docker compose --env-file .env.local
+  # --profile app up -d --wait`. Behind a profile so the plain `up -d` used by
+  # `bun run db:setup` keeps touching only the database. Port 3001 matches the
+  # local MCP/editor setup; BETTER_AUTH_URL and the *_URL_DOCKER vars live in
+  # .env.local (Docker has its own network, so `localhost` there means the
+  # container, not the host Postgres).
+  app:
+    profiles: ["app"]
+    build: .
+    image: piyaz-app:local
+    command: ["bun", "server.js"]
+    env_file: .env.local
+    environment:
+      PORT: "3001"
+      NODE_ENV: "production"
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3001}
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
+      DATABASE_SERVICE_ROLE_URL: ${DATABASE_SERVICE_ROLE_URL_DOCKER}
+      DATABASE_AUTH_URL: ${DATABASE_AUTH_URL_DOCKER}
+      TRUSTED_PROXY_HEADER: ${TRUSTED_PROXY_HEADER:-none}
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   pgdata:

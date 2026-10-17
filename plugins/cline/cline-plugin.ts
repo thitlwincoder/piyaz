@@ -454,7 +454,7 @@ export function createPiyazPlugin(config: PiyazPluginConfig) {
     manifest: {
       capabilities: ["tools", "hooks"],
     },
-    setup(api, ctx) {
+    setup(api: any, ctx: any) {
       // Register all tools before the first iteration; setup must stay sync.
       for (const tool of createPiyazTools(config)) {
         api.registerTool(tool);
